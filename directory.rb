@@ -1,4 +1,4 @@
-def get_students_v2 # new version asks for cohort
+def get_students # new version asks for cohort
   puts "Please enter the name of a student"
   puts "To finish press 'enter' twice"
 
@@ -51,8 +51,20 @@ end
 
 def print_array(people)
   people_printed = 0
+  if people.length == 0
+    puts "There are no students"
+  else
+    while people_printed < people.count do
+      puts "#{people_printed + 1}. #{people[people_printed][:name]} (#{people[people_printed][:cohort]} cohort)"
+      people_printed += 1
+    end
+  end
+end
+
+def print_array_center_80(people)
+  people_printed = 0
   while people_printed < people.count do
-    puts "#{people_printed + 1}. #{people[people_printed][:name]} (#{people[people_printed][:cohort]} cohort)"
+    puts "#{people_printed + 1}. #{people[people_printed][:name]} (#{people[people_printed][:cohort]} cohort)".center(80)
     people_printed += 1
   end
 end
@@ -82,15 +94,28 @@ def print_twelve_minus(people) # hard coded as below 12 characters.
   end
 end
 
+def print_sorted_by_cohort(names)
+  cohort_hash = {}
+  names.each do |person|
+    if cohort_hash.has_key?(person[:cohort]) == false
+      cohort_hash[person[:cohort]] = []
+    end
+    cohort_hash[person[:cohort]].push(person[:name])
+  end
 
-
-
+  cohort_hash.each do |key, value|
+    puts key
+    puts value
+  end
+end
 
 # call the methods
-
-students = get_students_v2
+# ----------------
+students = get_students
 print_header
 # print_specific_initial(students, "t")
 # print_twelve_minus(students)
+# print_array_center_80(students)
 print_array(students)
 print_footer(students)
+# print_sorted_by_cohort(students)
