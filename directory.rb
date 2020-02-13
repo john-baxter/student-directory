@@ -46,8 +46,9 @@ def get_students()
 end
 
 def print_header
-  puts "\nThe students of Villains Academy"
-  puts "-------------"
+  header = "\nThe students of Villains Academy"
+  puts header
+  puts puts "-" * header.length
 end
 
 def print_array()
@@ -126,6 +127,7 @@ def print_menu
   puts "\nMenu:"
     puts "\n1. Input the students"
     puts "2. Show the students"
+    puts "3. save the list to students.csv"
     puts "9. Exit"
 end
 
@@ -141,6 +143,8 @@ def process(selection)
     get_students()
   when "2"
     show_students
+  when "3"
+    save_students
   when "9"
     exit
   else
@@ -148,7 +152,16 @@ def process(selection)
   end
 end
 
-
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+  puts "*Saved*"
+end
 
 # call the methods
 # ----------------
